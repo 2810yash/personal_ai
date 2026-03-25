@@ -22,7 +22,9 @@ def add_memory(text: str):
 def ask_ai(prompt: str):
     memories = search_memory(prompt)
 
-    context = "\n".join(memories) if memories else "No past data"
+    print("DEBUG memories:", memories)
+
+    context = "\n".join(memories) if len(memories) > 0 else "No past data"
 
     full_prompt = f"""
 You are a personal AI assistant.
@@ -30,16 +32,21 @@ You are a personal AI assistant.
 User past activity:
 {context}
 
+Instructions:
+- Analyze ALL activities
+- Mention multiple tasks if present
+- Be specific
+
 Question:
 {prompt}
 
-Give a short and helpful answer:
+Answer:
 """
 
     response = requests.post(
         OLLAMA_URL,
         json={
-            "model": "gemma:2b",
+            "model": "phi",
             "prompt": full_prompt,
             "stream": False
         }

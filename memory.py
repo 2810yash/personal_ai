@@ -1,12 +1,16 @@
-from chromadb import Client
-from chromadb.config import Settings
+import chromadb
+import os
 from sentence_transformers import SentenceTransformer
 
-# Fast embedding model (very important for your system)
+# Absolute path (FIX)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, "memory_db")
+
+# Load embedding model
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
-# Create local DB
-client = Client(Settings(persist_directory="./memory_db"))
+# Persistent DB
+client = chromadb.PersistentClient(path=DB_PATH)
 
 collection = client.get_or_create_collection(name="memory")
 
@@ -22,11 +26,12 @@ def store_memory(text):
 
 def search_memory(query):
     embedding = model.encode(query).tolist()
+
     results = collection.query(
         query_embeddings=[embedding],
-        n_results=1
+        n_results=3
     )
 
-    if results["documents"]:
+    if results["documents"] and len(results["documents"]) > 0:
         return results["documents"][0]
     return []
