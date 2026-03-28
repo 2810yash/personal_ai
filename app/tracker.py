@@ -1,6 +1,6 @@
 import os
 import time
-from memory import store_memory
+from app.memory import store_memory
 from datetime import datetime
 
 # 👇 ONLY track your project folder

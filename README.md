@@ -27,7 +27,7 @@ pip install -r requirements.txt
 ## Run
 
 ```bash
-uvicorn main:app --reload
+uvicorn app.main:app --reload
 ```
 
 Service defaults to `http://127.0.0.1:8000`.
@@ -49,4 +49,5 @@ curl "http://127.0.0.1:8000/ask?prompt=What%20do%20I%20like%3F"
 
 - Memories are persisted in `memory_db/` (ignored by git via `.gitignore`).
 - If Ollama isn’t running or the model isn’t available, `/ask` will fail with the upstream error response.
+- faster then phi "model": "tinyllama"
 

@@ -4,7 +4,7 @@ from sentence_transformers import SentenceTransformer
 
 # Absolute path (FIX)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, "memory_db")
+DB_PATH = os.path.join(BASE_DIR, "..", "data", "memory_db")
 
 # Load embedding model
 model = SentenceTransformer("all-MiniLM-L6-v2")
